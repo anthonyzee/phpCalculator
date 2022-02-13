@@ -4,7 +4,8 @@ A very simple calculator to compute a string of equation using PHP as backend sc
 
 Installation
 ------------
-Just clone it and put it in a php web server or run it in project directory using command line below then use web browser and browser to http://localhost:8000.
+Method 1: Just clone it and put it in a php web server.
+Method 2: Download project zip file then extract it to a directory. Run a php web server in the project directory Using command line below. Then use web browser and browse to http://localhost:8000.
 
 ```html
 php -S localhost:8000 -t public
