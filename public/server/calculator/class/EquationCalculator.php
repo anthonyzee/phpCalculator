@@ -2,7 +2,9 @@
 namespace phpCalculator;
 
 require_once(__ROOT__.'/abstract/calculatorAbstract.php');
+require_once(__ROOT__.'/class/calculatorSharedClass.php');
 require_once(__ROOT__.'/class/EquationParser.php');
+require_once(__ROOT__.'/class/EquationChecker.php');
 require_once(__ROOT__.'/class/calculatorOperator.php');
 
 // single responsibility
@@ -43,6 +45,12 @@ class EquationCalculator {
 	private function reEqstring($leftOp, $rightOp, $operator){
 		return $leftOp." ".$operator." ".$rightOp;
 	}
+	
+	/**
+	* Recursive function to calculate the value of an operation using the equation string.
+	*
+	* @return float Sum of the current equation string
+	*/
 	public function calculateOp($equationString):float{
 		$equationParser=new EquationParser($this->operatorList);
 		$eqObj=$equationParser->parse($equationString);

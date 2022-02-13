@@ -1,49 +1,23 @@
 <?php
 namespace phpCalculator;
 
-class EquationBracket {
-	public $startBracket=false;
-	public $startBracketcount=0;
-	public $startBracketpos=-1;
-	public $endBracketpos=-1;
-	public function __construct() {
-		$this->reset();
-	}
-	public function reset() {
-		$this->startBracket=false;
-		$this->startBracketcount=0;
-		$this->startBracketpos=-1;
-		$this->endBracketpos=-1;			
-	}
-}
-class EquationObj {
-	public $operandsList;
-	public $operatorsList;
-	
-	public function __construct() {
-		$this->operandsList = [];
-		$this->operatorsList = [];
-	}	
-}
-
 // single responsibility
 class EquationParser {
 	public function __construct($operatorList) {
 		$this->operatorList = $operatorList;
 	}
-	private function checkIsoperator($val){
-		for ($i=0; $i<count($this->operatorList); $i++){
-			if ($val==$this->operatorList[$i]->operatorString){
-				return true;
-			}
-		}
-		return false;
-	}
+
+	/**
+	* Function to parse the equation string into equation object.
+	*
+	* @return EquationObj of the current equation string
+	*/		
 	public function parse($equationString){
 		$equationArray=explode(" ", $equationString);
 		$equationBracket=new EquationBracket();
 		$equationObj=new EquationObj();
-	
+		$equationChecker=new EquationChecker($this->operatorList);
+		
 		for ($i=0; $i<count($equationArray); $i++){
 			$eqval=$equationArray[$i];
 			if ($eqval=="("){
@@ -61,7 +35,7 @@ class EquationParser {
 				}
 			}
 			if (!$equationBracket->startBracket){
-				if ($this->checkIsoperator($eqval)){
+				if ($equationChecker->checkIsoperator($eqval)){
 					array_push($equationObj->operatorsList, $eqval);
 				}else{
 					if ($equationBracket->startBracketpos!=-1){

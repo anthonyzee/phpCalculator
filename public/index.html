@@ -7,12 +7,40 @@
 	<title>PHP Calculator</title>
 	<meta name="description" content="">
 	<meta name="author" content="">
-	<link rel="stylesheet" href="css/basic.css">
 	<script src="js/basic.js"></script>
+	<script src="js/calculatorClient.js"></script>
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@300&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="css/basic.css">
 </head>
 
 <body>
 
+<div class="content" style="text-align: center;">
+
 <h1>PHP Calculator</h1>
+
+<form id="fcalculator" class="fade-in" action="" onsubmit="event.preventDefault(); calculatorClient.submitEquation()">
+  <label for="fequation"><span style="font-size: 18px">Type in your equation here :</span><br>
+  ( numbers, operators and brackets are all separated by spaces )</label><br>
+  <input type="text" id="fequation" name="fequation" autofocus autocomplete="off"><br>
+  <div id="fmsgbox" class="fade-in hide">
+	<span id="fmsg" class="text-error">Some sort of error here</span><br><br>
+  </div>
+  <input type="reset">
+  <input type="submit" value="Submit">
+</form>
+
+<form id="fresult" class="fade-in hide" onsubmit="event.preventDefault(); calculatorClient.newEquation()">
+  <h3 id="fshowstatus" class="text-success">Done</h3>
+  <span style="font-size: 18px">The result of your equation is :</span><br>
+  <span id="fshowequation" style="font-size: 12px"></span>
+  <h1 id="fanswer">44</h1>
+  <input id="fnewbutton" type="submit" value="New Equation">
+  <input id="fretrybutton" type="button" value="Retry" onclick="calculatorClient.retryEquation()">
+</form>
+
+</div>
 </body>
 </html>
