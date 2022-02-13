@@ -54,6 +54,9 @@ class EquationCalculator {
 	public function calculateOp($equationString):float{
 		$equationParser=new EquationParser($this->operatorList);
 		$eqObj=$equationParser->parse($equationString);
+		if (count($eqObj->operatorsList)!=count($eqObj->operandsList)-1){
+			return 0;
+		}
 		if (count($eqObj->operatorsList)>1){
 			$sortedeqObj=$this->sortOp($eqObj);
 			$total=0;

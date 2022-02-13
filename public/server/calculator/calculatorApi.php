@@ -11,6 +11,7 @@ header('Content-Type: application/json');
 switch (strtoupper($_SERVER['REQUEST_METHOD'])) {
     case 'GET':
 		$equationString=$_GET["fequation"];
+		$equationString=trim($equationString);
 		$checker=new phpCalculator\EquationChecker($operatorList);
 		$checkr=$checker->check($equationString);
 		if ($checkr){
