@@ -4,7 +4,7 @@ A very simple calculator to compute a string of equation using PHP as backend sc
 
 Installation
 ------------
-Method 1: Just clone it and put it in a php web server.
+Method 1: Just clone it and put it in a php web server.<br>
 Method 2: Download project zip file then extract it to a directory. Run a php web server in the project directory Using command line below. Then use web browser and browse to http://localhost:8000.
 
 ```html
@@ -18,6 +18,10 @@ phpCalculator supports all popular modern web browsers.
  - Tested in Firefox 95.0+
  - Tested in Chrome 98+
 
+Unit Test
+---------
+phpCalculator is using PHPUnit for unit test. 
+https://phpunit.de/
 
 License
 ------------------
