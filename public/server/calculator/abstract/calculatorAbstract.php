@@ -1,5 +1,6 @@
 <?php
-namespace phpCalculator;
+namespace phpcalculator\abstracts;
+
 abstract class Equation {
 	public $leftoperand;
 	public $rightoperand;

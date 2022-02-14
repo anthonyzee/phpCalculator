@@ -1,5 +1,5 @@
 <?php
-namespace phpCalculator;
+namespace phpcalculator\classes;
 
 class EquationChecker {
 	public function __construct($operatorList) {

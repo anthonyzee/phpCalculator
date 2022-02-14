@@ -1,23 +1,18 @@
 <?php
-namespace phpCalculator;
 use PHPUnit\Framework\TestCase;
 
 define('__ROOT__', realpath(dirname(__FILE__))."/../public/server/calculator");
-require_once(__ROOT__.'/class/EquationCalculator.php');
+
 require_once(__ROOT__.'/class/calculatorOperator.php');
+require_once(__ROOT__.'/class/EquationCalculator.php');
+require_once(__ROOT__.'/class/EquationParser.php');
+require_once(__ROOT__.'/class/EquationChecker.php');
 
 class EquationCalculatorTest extends TestCase
 {
     public function testEquation1()
     {		
-		$operatorList=[
-			new operatorType(Divide::class, "/"),
-			new operatorType(Multiply::class, "*"),
-			new operatorType(Substract::class, "-"),
-			new operatorType(Addition::class, "+"),
-		];
-
-		$calc=new EquationCalculator($operatorList);
+		$calc=new phpcalculator\classes\EquationCalculator(phpcalculator\classes\operatorList::$data);
 		$equations=["1 + 1",
 			"2 * 2",
 			"1 + 2 + 3",

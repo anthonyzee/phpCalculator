@@ -1,5 +1,6 @@
 <?php
-namespace phpCalculator;
+namespace phpcalculator\classes;
+
 class EquationBracket {
 	public $startBracket=false;
 	public $startBracketcount=0;

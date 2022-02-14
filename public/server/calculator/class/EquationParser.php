@@ -1,5 +1,5 @@
 <?php
-namespace phpCalculator;
+namespace phpcalculator\classes;
 
 // single responsibility
 class EquationParser {

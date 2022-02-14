@@ -28,6 +28,9 @@ function CalculatorClient() {
 		var equationString=document.getElementById("fequation").value;
 		var eqCheck=new ClientEquationCheck();
 		if (eqCheck.check(equationString)){
+			document.getElementById("fmsgbox").classList.add("hide");
+			document.getElementById("fmsg").innerText="";
+			
 			serverClient.get("server/calculator/calculatorApi.php?fequation="+encodeURIComponent(equationString), "", function(d){
 				if (d.updates.status=="Done"){
 					document.getElementById("fanswer").innerText=d.updates.result;

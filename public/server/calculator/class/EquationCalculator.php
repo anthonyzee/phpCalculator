@@ -1,10 +1,9 @@
 <?php
-namespace phpCalculator;
+namespace phpcalculator\classes;
 
 require_once(__ROOT__.'/abstract/calculatorAbstract.php');
 require_once(__ROOT__.'/class/calculatorSharedClass.php');
 require_once(__ROOT__.'/class/EquationParser.php');
-require_once(__ROOT__.'/class/EquationChecker.php');
 require_once(__ROOT__.'/class/calculatorOperator.php');
 
 // single responsibility
