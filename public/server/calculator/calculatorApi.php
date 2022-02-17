@@ -18,7 +18,7 @@ switch (strtoupper($_SERVER['REQUEST_METHOD'])) {
 		if ($checkr){
 			$calc=new phpcalculator\classes\EquationCalculator(phpcalculator\classes\operatorList::$data);
 			$ret=$calc->calculateOp($equationString);
-			$changes=["status"=>"Done","result"=>$ret];
+			$changes=["status"=>"Done","result"=>round($ret,4)];
 			echo json_encode(array('now' => round(microtime(true) * 1000), "updates" => $changes));
 		}else{
 			$changes=["status"=>"Error","result"=>$checker->errorMsg];

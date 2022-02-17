@@ -20,6 +20,8 @@ class Addition extends Equation {
 }
 class Substract extends Equation {
 	public function calculate():float{
+		//echo $this->leftoperand - $this->rightoperand;
+		//exit;
 		return $this->leftoperand - $this->rightoperand;
 	}
 }

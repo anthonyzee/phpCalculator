@@ -21,30 +21,66 @@ class EquationCalculator {
 		return 0;
 	}	
 	private function sortOp($eqObj){
-		$sortedOp=new EquationObj();
-		
+		$sortedOp=[];
+		$seqNo=0;
 		for ($i=0; $i<count($this->operatorList); $i++){
 			for ($j=0; $j<count($eqObj->operatorsList); $j++){
 				if ($eqObj->operatorsList[$j]==$this->operatorList[$i]->operatorString){
-					array_push($sortedOp->operatorsList, $eqObj->operatorsList[$j]);
-					if ($eqObj->operandsList[$j]!="x"){
-						array_push($sortedOp->operandsList, $eqObj->operandsList[$j]);
-						$eqObj->operandsList[$j]="x";
-					}
-					if ($eqObj->operandsList[$j+1]!="x"){
-						array_push($sortedOp->operandsList, $eqObj->operandsList[$j+1]);
-						$eqObj->operandsList[$j+1]="x";
-					}
+					$seqNo++;
+					$item=[
+						"posno"=>$j, 
+						"seqno"=>$seqNo, 
+						"opstring"=>$eqObj->operatorsList[$j], 
+						"opleft"=>$eqObj->operandsList[$j], 
+						"opright"=>$eqObj->operandsList[$j+1],
+						"result"=>0,
+						"mergeposno"=>0,
+						"done"=>false
+					];
+					array_push($sortedOp, $item);
 				}
 			}
 		}
-		
 		return $sortedOp;
 	}
 	private function reEqstring($leftOp, $rightOp, $operator){
 		return $leftOp." ".$operator." ".$rightOp;
 	}
 	
+	function searchForId($id, $array) {
+		foreach ($array as $key => $val) {
+		   if ($val['posno'] === $id) {
+			   return $key;
+		   }
+		}
+		return null;
+	}
+	function searchForIdgreater($id, $array, $count) {
+		for ($i=$id+1; $i<$count; $i++){
+			$key=$this->searchForId($i, $array);
+			if (!is_null($key)){
+				return $key;
+			}
+		}
+		return null;
+	}	
+	function searchForIdlesser($id, $array) {
+		for ($i=$id-1; $i>=0; $i--){
+			$key=$this->searchForId($i, $array);
+			if (!is_null($key)){
+				return $key;
+			}
+		}
+		return null;
+	}		
+	function searchForId2($id, $array) {
+		foreach ($array as $key => $val) {
+		   if ($val['seqno'] === $id) {
+			   return $key;
+		   }
+		}
+		return null;
+	}	
 	/**
 	* Recursive function to calculate the value of an operation using the equation string.
 	*
@@ -59,18 +95,35 @@ class EquationCalculator {
 		if (count($eqObj->operatorsList)>1){
 			$sortedeqObj=$this->sortOp($eqObj);
 			$total=0;
+
+			uasort($sortedeqObj, function($a, $b){
+				return strcmp($a['posno'], $b['posno']);
+			});
 			
-			for ($i=0; $i<count($sortedeqObj->operatorsList); $i++){
-				if ($i==0){
-					$leftOp=$sortedeqObj->operandsList[$i];
+			$seqno=0;
+			$countOp=count($sortedeqObj);
+			while (count($sortedeqObj)>1){
+				$seqno++;
+				$keySeq=$this->searchForId2($seqno, $sortedeqObj);
+				
+				$item=$sortedeqObj[$keySeq];
+
+				$leftOp=$this->calculateOp($item["opleft"]);
+				$rightOp=$this->calculateOp($item["opright"]);
+				$ret=$this->calculateEquation($leftOp, $rightOp, $item["opstring"]);
+				
+				$key = $this->searchForIdlesser($item["posno"], $sortedeqObj);
+				
+				if (is_null($key)){
+					$key = $this->searchForIdgreater($item["posno"], $sortedeqObj, $countOp);
+					$sortedeqObj[$key]["opleft"]=$ret;
+				}else{
+					$sortedeqObj[$key]["opright"]=$ret;
 				}
-				$leftOp=$this->calculateOp($leftOp);
-				$rightOp=$this->calculateOp($sortedeqObj->operandsList[$i+1]);
-				$newEqstring=$this->reEqstring($leftOp, $rightOp, $sortedeqObj->operatorsList[$i]);
-				$leftOp=$this->calculateOp($newEqstring);
-				$total=$leftOp;
+				unset($sortedeqObj[$keySeq]);
 			}
 			
+			$total=$this->calculateEquation($sortedeqObj[$seqno]["opleft"], $sortedeqObj[$seqno]["opright"], $sortedeqObj[$seqno]["opstring"]);
 			return $total;
 		}else if (count($eqObj->operatorsList)==1){
 			$leftOp=$this->calculateOp($eqObj->operandsList[0]);
